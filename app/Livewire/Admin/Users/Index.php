@@ -22,7 +22,7 @@ class Index extends Component
     public ?int $deletingId = null;
 
     public string $name = '';
-    public string $email = '';
+    public ?string $email = null;
     public string $password = '';
     public string $password_confirmation = '';
     public bool $emailVerified = false;

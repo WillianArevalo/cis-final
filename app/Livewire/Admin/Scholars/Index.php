@@ -229,6 +229,7 @@ class Index extends Component
                     $query->where('name', 'like', '%' . $this->search . '%');
                 })
                 ->pluck('id')
+                ->take($this->perPage)
                 ->toArray();
         } else {
             $this->selected = [];

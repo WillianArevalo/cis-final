@@ -137,7 +137,7 @@ class Create extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'Ocurrio un error al crear el proyecto. Por favor, intenta nuevamente.',
-                variant: 'error'
+                variant: 'danger'
             );
         }
     }

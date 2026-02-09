@@ -145,19 +145,17 @@
                                 <flux:menu>
                                     @if ($report)
                                         <flux:menu.item icon="file" as="link"
-                                            href="{{ route('admin.reports.show', ['reportId' => $report->id]) }}"
+                                            href="{{ route('admin.reports.show', $report->id) }}" wire:navigate>
                                             wire:navigate>
                                             Ver reporte del mes
                                         </flux:menu.item>
                                     @endif
                                     <flux:menu.item icon="report" as="link"
-                                        href="{{ route('admin.reports.index', ['project' => $project->id]) }}"
-                                        wire:navigate>
+                                        href="{{ route('admin.reports.index', $project->id) }}" wire:navigate>
                                         Ver reportes
                                     </flux:menu.item>
                                     <flux:menu.item icon="eye" as="link"
-                                        href="{{ route('admin.projects.show', ['projectId' => $project->id]) }}"
-                                        wire:navigate>
+                                        href="{{ route('admin.projects.show', $project->id) }}" wire:navigate>
                                         Ver proyecto
                                     </flux:menu.item>
                                 </flux:menu>

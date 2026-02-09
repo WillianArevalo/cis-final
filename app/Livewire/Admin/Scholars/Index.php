@@ -157,6 +157,7 @@ class Index extends Component
                 variant: 'success'
             );
         } catch (\Exception $e) {
+            Log::error("Error al guardar becario: " . $e->getMessage(), ['exception' => $e]);
             DB::rollBack();
             Flux::toast(
                 heading: 'Error',

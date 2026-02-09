@@ -88,11 +88,12 @@
             </div>
             <div class="grid gap-4 sm:grid-cols-2">
                 <flux:input wire:model.defer="name" label="Nombre" placeholder="Nombre completo" />
-                <flux:input wire:model.defer="email" label="Correo" type="email" placeholder="correo@empresa.com" />
-                <flux:input wire:model.defer="password" label="Contrasena" type="password"
+                <flux:input wire:model.defer="email" icon="mail" label="Correo" type="email"
+                    placeholder="correo@empresa.com" />
+                <flux:input wire:model.defer="password" icon="lock" label="Contraseña" type="password"
                     placeholder="Minimo 8 caracteres" viewable />
-                <flux:input wire:model.defer="password_confirmation" label="Confirmar contrasena" type="password"
-                    placeholder="Repite la contrasena" viewable />
+                <flux:input wire:model.defer="password_confirmation" icon="lock-check" label="Confirmar contraseña"
+                    type="password" placeholder="Repite la contraseña" viewable />
                 <div class="sm:col-span-2">
                     <flux:switch wire:model="emailVerified" label="Correo verificado" />
                 </div>
@@ -103,11 +104,12 @@
                     Deja la contrasena en blanco para mantener la actual.
                 </flux:text>
             @endif
-            <div class="flex items-center justify-end gap-2">
-                <flux:button variant="ghost" type="button" wire:click="$set('showEditor', false)">
+            <div class="ms:flex-row flex flex-col items-center justify-end gap-2">
+                <flux:button variant="ghost" type="button" wire:click="$set('showEditor', false)"
+                    class="w-full sm:w-auto">
                     Cancelar
                 </flux:button>
-                <flux:button variant="primary" type="submit">
+                <flux:button variant="primary" type="submit" class="w-full sm:w-auto">
                     {{ $editingId ? 'Guardar cambios' : 'Crear usuario' }}
                 </flux:button>
             </div>

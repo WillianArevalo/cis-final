@@ -48,6 +48,14 @@ class Index extends Component
         ];
     }
 
+    protected $messages = [
+        'name.required' => 'El nombre es obligatorio.',
+        'email.required' => 'El correo es obligatorio.',
+        'email.email' => 'El correo debe ser una dirección de correo válida.',
+        'email.unique' => 'El correo ya está en uso por otro usuario.',
+        'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+    ];
+
     public function updatedSearch(): void
     {
         $this->resetPage();

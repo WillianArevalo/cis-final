@@ -55,7 +55,7 @@ class Profile extends Component
             Flux::toast(
                 heading: 'Error al actualizar perfil',
                 text: 'Ocurrió un error al actualizar tu perfil. Por favor intenta de nuevo.',
-                variant: 'error'
+                variant: 'danger'
             );
         }
     }

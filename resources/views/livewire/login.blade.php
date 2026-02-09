@@ -12,7 +12,7 @@
         <div class="relative">
             <flux:input wire:model="password" label="Contraseña" type="password" required icon="lock-closed"
                 autocomplete="current-password" placeholder="Contraseña" viewable />
-            <flux:link class="absolute end-0 top-0 text-sm" href="#" wire:navigate>
+            <flux:link class="absolute end-0 top-0 text-sm" href="{{ route('password.request') }}" wire:navigate>
                 ¿Olvidaste tu contraseña?
             </flux:link>
         </div>

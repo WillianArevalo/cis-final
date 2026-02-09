@@ -52,7 +52,9 @@
             class="block! border-b border-zinc-200 bg-white lg:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:navbar class="w-full">
                 <flux:sidebar.toggle class="lg:hidden" icon="bars-3" inset="left" />
-                @include('components.partials.breadcrumbs')
+                <div class="hidden lg:block">
+                    @include('components.partials.breadcrumbs')
+                </div>
                 <flux:spacer />
                 <flux:dropdown position="bottom" align="end">
                     @if (auth()->user()->profile_photo_path)
@@ -95,6 +97,10 @@
                     </flux:menu>
                 </flux:dropdown>
             </flux:navbar>
+
+            <div class="block lg:hidden pb-4">
+                @include('components.partials.breadcrumbs')
+            </div>
         </flux:header>
 
         {{ $slot }}

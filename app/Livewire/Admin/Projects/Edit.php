@@ -187,7 +187,7 @@ class Edit extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'Ocurrio un error al actualizar el proyecto. Por favor, intenta nuevamente.',
-                variant: 'error'
+                variant: 'danger'
             );
         }
     }

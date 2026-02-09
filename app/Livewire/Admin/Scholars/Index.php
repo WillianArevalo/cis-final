@@ -31,7 +31,6 @@ class Index extends Component
     public $communityId = null;
     public $projectId = null;
     public $userId = null;
-    public $type = "";
     public $phone = "";
 
     public bool $showEditor = false;
@@ -78,7 +77,6 @@ class Index extends Component
         $this->communityId = $scholar->community_id;
         $this->userId = $scholar->user_id;
         $this->projectId = $scholar->project_id ?? "";
-        $this->type = $scholar->type;
         $this->phone = $scholar->phone;
 
         $this->resetValidation();
@@ -96,7 +94,6 @@ class Index extends Component
             'studyLevel' => 'nullable|string|max:255',
             'communityId' => 'nullable|exists:communities,id',
             'projectId' => 'nullable|exists:projects,id',
-            'type' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
         ], [
             'name.required' => 'El nombre es obligatorio.',
@@ -114,8 +111,6 @@ class Index extends Component
             'studyLevel.max' => 'El nivel educativo no puede exceder los 255 caracteres.',
             'communityId.exists' => 'La comunidad seleccionada no existe.',
             'projectId.exists' => 'El proyecto seleccionado no existe.',
-            'type.string' => 'El tipo debe ser una cadena de texto.',
-            'type.max' => 'El tipo no puede exceder los 255 caracteres.',
             'phone.string' => 'El teléfono debe ser una cadena de texto.',
             'phone.max' => 'El teléfono no puede exceder los 20 caracteres.',
         ]);
@@ -149,7 +144,7 @@ class Index extends Component
                 'study_level' => $validated['studyLevel'] ?? null,
                 'community_id' => $communityId,
                 'project_id' => $projectId,
-                'type' => $validated['type'] ?? null,
+                'type' => "new_entry",
                 'phone' => $validated['phone'] ?? null,
                 'user_id' => $userId,
             ];
@@ -231,7 +226,6 @@ class Index extends Component
         $this->studyLevel = "";
         $this->communityId = null;
         $this->projectId = null;
-        $this->type = "";
         $this->phone = "";
     }
 

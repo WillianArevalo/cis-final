@@ -6,6 +6,7 @@ use Livewire\Component;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 
 class Profile extends Component
@@ -51,6 +52,7 @@ class Profile extends Component
                 variant: 'success'
             );
         } catch (\Exception $e) {
+            Log::error('Error updating profile for user ID ' . $this->user->id . ': ' . $e->getMessage());
             DB::rollBack();
             Flux::toast(
                 heading: 'Error al actualizar perfil',

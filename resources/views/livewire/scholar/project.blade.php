@@ -108,25 +108,25 @@
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div class="space-y-1">
                         <flux:heading size="lg">Objetivos especificos</flux:heading>
-                        <flux:text class="text-sm">Agrega o ajusta los objetivos especificos del proyecto.
+                        <flux:text class="text-sm">
+                            Agrega o ajusta los objetivos especificos del proyecto.
                         </flux:text>
                     </div>
-                    <flux:button variant="ghost" type="button" icon="plus" wire:click="addSpecificObjective">
+                    <flux:button type="button" icon="plus" wire:click="addSpecificObjective">
                         Agregar objetivo
                     </flux:button>
                 </div>
 
                 <div class="mt-4 flex flex-col gap-3">
                     @foreach ($specificObjectives as $index => $objective)
-                        <div class="flex flex-col gap-2 sm:flex-row sm:items-center"
-                            wire:key="objective-{{ $index }}">
+                        <flux:input.group wire:key="objective-{{ $index }}">
                             <flux:input wire:model.defer="specificObjectives.{{ $index }}" class="flex-1"
                                 placeholder="Objetivo especifico" />
-                            <flux:button variant="ghost" type="button" icon="trash"
+                            <flux:button type="button" icon="trash"
                                 wire:click="removeSpecificObjective({{ $index }})">
                                 Quitar
                             </flux:button>
-                        </div>
+                        </flux:input.group>
                     @endforeach
                 </div>
             </div>

@@ -137,8 +137,9 @@ ui-description {
     @apply overflow-hidden;
 }
 
-ui-selected > div[data-appended] {
-    @apply text-wrap line-clamp-1;
+ui-selected > div[data-appended],
+span[data-flux-pillbox-placeholder] {
+    @apply text-wrap line-clamp-1 truncate;
 }
 
 ui-editor ui-toolbar div {

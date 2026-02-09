@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Scholarship;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -35,10 +36,14 @@ class Index extends Component
     public bool $showDeleteConfirm = false;
     public ?int $editingId = null;
     public ?int $deletingId = null;
+    public bool $showBulkDelete = false;
     public $scholar = null;
 
     public $communities = [];
     public $projects = [];
+
+    public $selected = [];
+    public $selectAll = false;
 
     public function mount()
     {
@@ -150,7 +155,7 @@ class Index extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'Ocurrió un error al guardar el becario. Por favor, intenta nuevamente.',
-                variant: 'error'
+                variant: 'danger'
             );
         }
     }
@@ -169,7 +174,8 @@ class Index extends Component
 
         try {
             DB::beginTransaction();
-            Scholarship::findOrFail($this->deletingId)->delete();
+            $scholar = Scholarship::findOrFail($this->deletingId);
+            $scholar->delete();
             $this->showDeleteConfirm = false;
             $this->deletingId = null;
             DB::commit();
@@ -183,7 +189,7 @@ class Index extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'Ocurrió un error al eliminar el becario. Por favor, intenta nuevamente.',
-                variant: 'error'
+                variant: 'danger'
             );
         }
     }
@@ -211,6 +217,71 @@ class Index extends Component
     public function updatedPerPage(): void
     {
         $this->resetPage();
+    }
+
+    public function updatedSelectAll($value): void
+    {
+        if ($value) {
+            $this->selected = Scholarship::query()
+                ->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('institution', 'like', '%' . $this->search . '%')
+                ->orWhereHas('community', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                })
+                ->pluck('id')
+                ->toArray();
+        } else {
+            $this->selected = [];
+        }
+    }
+
+    public function updatedSelected(): void
+    {
+        $total = Scholarship::query()
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('institution', 'like', '%' . $this->search . '%')
+            ->orWhereHas('community', function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            })
+            ->count();
+
+        $this->selectAll = count($this->selected) === $total;
+    }
+
+    public function deleteBulk(): void
+    {
+        if (empty($this->selected)) {
+            return;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $scholars = Scholarship::whereIn('id', $this->selected)->get();
+            foreach ($scholars as $scholar) {
+                $scholar->delete();
+            }
+
+            Scholarship::whereIn('id', $this->selected)->delete();
+            $this->showBulkDelete = false;
+            $this->selected = [];
+            $this->selectAll = false;
+            DB::commit();
+            Flux::toast("delete-bulk")->close();
+            Flux::toast(
+                heading: 'Becarios eliminados',
+                text: 'Los becarios seleccionados han sido eliminados exitosamente.',
+                variant: 'success'
+            );
+        } catch (\Exception $e) {
+            Log::error("Error al eliminar becarios seleccionados: " . $e->getMessage(), ['exception' => $e]);
+            DB::rollBack();
+            Flux::toast(
+                heading: 'Error',
+                text: 'Ocurrió un error al eliminar los becarios seleccionados. Por favor, intenta nuevamente.',
+                variant: 'danger'
+            );
+        }
     }
 
     #[Layout('components.layouts.app')]

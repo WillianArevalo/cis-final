@@ -26,9 +26,31 @@
         </div>
     </div>
 
+    @if ($selected)
+        <div
+            class="flex items-center gap-4 rounded-xl border border-dashed border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-700 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
+            <flux:icon name="exclamation-triangle" />
+            <p>
+                {{ count($selected) }} becado(s) seleccionado(s).
+                <flux:button class="ml-2" size="sm" wire:click="$set('selected', [])">
+                    Limpiar selección
+                </flux:button>
+            </p>
+            <div class="ms-auto">
+                <flux:modal.trigger name="delete-bulk">
+                    <flux:button variant="danger" icon="trash" size="sm">
+                        Eliminar seleccionados
+                    </flux:button>
+                </flux:modal.trigger>
+            </div>
+        </div>
+    @endif
+
     <flux:table :paginate="$scholars">
         <flux:table.columns>
-            <flux:table.column>#</flux:table.column>
+            <flux:table.column>
+                <flux:checkbox wire:model.live="selectAll" />
+            </flux:table.column>
             <flux:table.column>Becado</flux:table.column>
             <flux:table.column>Nivel</flux:table.column>
             <flux:table.column>Comunidad</flux:table.column>
@@ -37,7 +59,9 @@
         <flux:table.rows>
             @forelse ($scholars as $scholar)
                 <flux:table.row :key="$scholar->id">
-                    <flux:table.cell>{{ $loop->iteration }}</flux:table.cell>
+                    <flux:table.cell>
+                        <flux:checkbox wire:model.live="selected" value="{{ $scholar->id }}" />
+                    </flux:table.cell>
                     <flux:table.cell variant="strong">
                         <div class="flex items-center gap-3">
                             @if ($scholar->photo && Storage::disk('public')->exists($scholar->photo))
@@ -232,6 +256,26 @@
                 </flux:button>
                 <flux:button variant="danger" type="button" wire:click="delete">
                     Eliminar
+                </flux:button>
+            </div>
+        </div>
+    </flux:modal>
+
+    <flux:modal name="delete-bulk" class="w-full max-w-sm">
+        <div class="flex flex-col gap-4">
+            <div class="space-y-1">
+                <flux:heading size="xl">
+                    Eliminar becados seleccionados
+                </flux:heading>
+                <flux:text class="text-sm">Esta acción es permanente. Confirma para continuar.</flux:text>
+            </div>
+            <flux:error name="delete" />
+            <div class="flex items-center justify-end gap-2">
+                <flux:button variant="ghost" type="button" wire:click="$set('showBulkDelete', false)">
+                    Cancelar
+                </flux:button>
+                <flux:button variant="danger" type="button" wire:click="deleteBulk">
+                    Eliminar seleccionados
                 </flux:button>
             </div>
         </div>

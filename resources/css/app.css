@@ -140,3 +140,8 @@ ui-description {
 ui-selected > div[data-appended] {
     @apply text-wrap line-clamp-1;
 }
+
+ui-editor ui-toolbar div {
+    @apply overflow-x-auto!;
+    -webkit-overflow-scrolling: touch;
+}

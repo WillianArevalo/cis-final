@@ -89,17 +89,20 @@
                     placeholder="Ej. 120 familias, 10 niños de la comunidad..." icon="users" />
             </div>
             <flux:editor wire:model.defer="generalObjective" label="Objetivo general" rows="4"
-                placeholder="Describe el objetivo general del proyecto" />
+                placeholder="Describe el objetivo general del proyecto"
+                toolbar="bold | italic | bullet | align ~ undo redo" />
             <flux:editor wire:model.defer="justification" label="Justificacion" rows="4"
-                placeholder="Motiva el por que del proyecto" />
+                placeholder="Motiva el por que del proyecto" toolbar="bold | italic | bullet | align ~ undo redo" />
             <flux:editor wire:model.defer="contextualization" label="Contextualizacion" rows="4"
-                placeholder="Contexto de la comunidad y necesidades" />
+                placeholder="Contexto de la comunidad y necesidades"
+                toolbar="bold | italic | bullet | align ~ undo redo" />
             <flux:editor wire:model.defer="descriptionActivities" label="Descripcion de actividades" rows="4"
-                placeholder="Describe las actividades principales" />
+                placeholder="Describe las actividades principales"
+                toolbar="bold | italic | bullet | align ~ undo redo" />
             <flux:editor wire:model.defer="projections" label="Proyecciones" rows="4"
-                placeholder="Resultados esperados del proyecto" />
+                placeholder="Resultados esperados del proyecto" toolbar="bold | italic | bullet | align ~ undo redo" />
             <flux:editor wire:model.defer="challenges" label="Retos" rows="4"
-                placeholder="Riesgos o retos previstos" />
+                placeholder="Riesgos o retos previstos" toolbar="bold | italic | bullet | align ~ undo redo" />
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900">
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -130,7 +133,8 @@
 
             <div class="grid gap-6 md:grid-cols-3">
                 <div class="flex flex-col gap-4">
-                    <flux:file-upload wire:model="schedule" label="Cronograma" accept="application/pdf" max-size="5120">
+                    <flux:file-upload wire:model="schedule" label="Cronograma" accept="application/pdf"
+                        max-size="5120">
                         <flux:file-upload.dropzone heading="Sube el cronograma en PDF" with-progress
                             text="PDF hasta 5MB" inline />
                     </flux:file-upload>

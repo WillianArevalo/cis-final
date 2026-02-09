@@ -46,8 +46,9 @@
         </div>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <flux:editor label="Descripción de la actividad" wire:model="description"
+                toolbar="bold | italic | bullet | align ~ undo redo"
                 placeholder="Describe las actividades realizadas durante el mes" required />
-            <flux:editor label="Obstáculos" wire:model="obstacles"
+            <flux:editor label="Obstáculos" wire:model="obstacles" toolbar="bold | italic | bullet | align ~ undo redo"
                 placeholder="Describe los obstáculos enfrentados durante el mes" required />
         </div>
         <flux:file-upload wire:model="images" multiple label="Fotografías de la actividad" accept="image/*"

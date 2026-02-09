@@ -17,7 +17,7 @@
                 class="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-900/30">
             </div>
 
-            <div class="relative w-full max-w-2xl">
+            <div class="relative w-full max-w-3xl">
                 <div
                     class="rounded-2xl border border-zinc-200 bg-white/90 p-6 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/80">
                     <div class="flex flex-col gap-4">

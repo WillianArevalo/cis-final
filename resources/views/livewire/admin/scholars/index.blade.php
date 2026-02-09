@@ -170,8 +170,8 @@
                 icon="building" />
             <flux:input label="Carrera o área de estudio" wire:model.defer="career"
                 placeholder="Ej. Informatica, contabilidad, etc." icon="book" />
-            <div class="flex items-center gap-4">
-                <div class="flex-1">
+            <div class="flex flex-col items-center gap-4 sm:flex-row">
+                <div class="w-full flex-1">
                     <flux:select label="Nivel educativo" wire:model.defer="studyLevel" variant="listbox"
                         placeholder="Seleccionar nivel educativo">
                         <flux:select.option value="" disabled>Seleccionar nivel educativo</flux:select.option>
@@ -182,7 +182,7 @@
                         <flux:select.option value="Universidad">Universidad</flux:select.option>
                     </flux:select>
                 </div>
-                <div class="flex-1">
+                <div class="w-full flex-1">
                     <flux:input wire:model.defer="academicLevel" label="Año o grado académico"
                         placeholder="3er año / 1ro grado" icon="school" />
                 </div>
@@ -209,6 +209,18 @@
                 @endforeach
             </flux:select>
 
+            <flux:select wire:model.defer="userId" label="Usuario asociado" variant="listbox"
+                placeholder="Seleccionar usuario" searchable>
+                <x-slot name="search">
+                    <flux:select.search placeholder="Buscar usuario..." />
+                </x-slot>
+                <flux:select.option value="">Sin usuario asociado</flux:select.option>
+                @foreach ($users as $user)
+                    <flux:select.option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})
+                    </flux:select.option>
+                @endforeach
+            </flux:select>
+
             <flux:file-upload wire:model="photo" label="Foto del becado" accept="image/*" max-size="2048">
                 <flux:file-upload.dropzone heading="Arrastra y suelta la foto aquí o haz clic para seleccionar"
                     with-progress text="JPG, PNG, WEBP, JPEG hasta 5MB" inline />
@@ -232,11 +244,12 @@
                 </flux:file-item>
             @endif
 
-            <div class="flex items-center justify-end gap-2">
-                <flux:button variant="ghost" type="button" wire:click="$set('showEditor', false)">
+            <div class="flex flex-col items-center justify-end gap-2 sm:flex-row">
+                <flux:button variant="ghost" type="button" wire:click="$set('showEditor', false)"
+                    class="w-full sm:w-auto">
                     Cancelar
                 </flux:button>
-                <flux:button variant="primary" type="submit">
+                <flux:button variant="primary" type="submit" class="w-full sm:w-auto">
                     Guardar
                 </flux:button>
             </div>

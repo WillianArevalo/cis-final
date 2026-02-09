@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Scholars;
 use App\Models\Community;
 use App\Models\Project;
 use App\Models\Scholarship;
+use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,6 +30,7 @@ class Index extends Component
     public $studyLevel = "";
     public $communityId = null;
     public $projectId = null;
+    public $userId = null;
     public $type = "";
     public $phone = "";
 
@@ -41,6 +43,7 @@ class Index extends Component
 
     public $communities = [];
     public $projects = [];
+    public $users = [];
 
     public $selected = [];
     public $selectAll = false;
@@ -49,6 +52,7 @@ class Index extends Component
     {
         $this->communities = Community::all();
         $this->projects = Project::all();
+        $this->users = User::all();
     }
 
     public function create(): void
@@ -72,6 +76,7 @@ class Index extends Component
         $this->career = $scholar->career;
         $this->studyLevel = $scholar->study_level;
         $this->communityId = $scholar->community_id;
+        $this->userId = $scholar->user_id;
         $this->projectId = $scholar->project_id ?? "";
         $this->type = $scholar->type;
         $this->phone = $scholar->phone;
@@ -127,6 +132,7 @@ class Index extends Component
                 'project_id' => $validated['projectId'] ?? null,
                 'type' => $validated['type'] ?? null,
                 'phone' => $validated['phone'] ?? null,
+                'user_id' => $this->userId ?? null,
             ];
 
             DB::beginTransaction();

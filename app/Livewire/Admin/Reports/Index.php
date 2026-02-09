@@ -40,7 +40,7 @@ class Index extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'No se pudo hacer el reporte editable.',
-                variant: 'error',
+                variant: 'danger',
             );
         }
     }
@@ -63,7 +63,7 @@ class Index extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'No se pudo quitar la editabilidad del reporte.',
-                variant: 'error',
+                variant: 'danger',
             );
         }
     }
@@ -100,7 +100,7 @@ class Index extends Component
             Flux::toast(
                 heading: 'Error',
                 text: 'No se pudo eliminar el reporte.',
-                variant: 'error',
+                variant: 'danger',
             );
         } finally {
             $this->showDelete = false;

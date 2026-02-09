@@ -3,6 +3,9 @@
 namespace App\Livewire\Admin\Users;
 
 use App\Models\User;
+use Flux\Flux;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -90,25 +93,42 @@ class Index extends Component
     public function save(): void
     {
         $validated = $this->validate();
+        try {
 
-        $data = [
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'email_verified_at' => $this->emailVerified ? now() : null,
-        ];
+            $data = [
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'email_verified_at' => $this->emailVerified ? now() : null,
+            ];
 
-        if (!empty($validated['password'])) {
-            $data['password'] = $validated['password'];
+            if (!empty($validated['password'])) {
+                $data['password'] = $validated['password'];
+            }
+
+            DB::beginTransaction();
+            if ($this->editingId) {
+                User::findOrFail($this->editingId)->update($data);
+            } else {
+                User::create($data);
+            }
+            DB::commit();
+            $this->showEditor = false;
+            $this->resetEditor();
+
+            Flux::toast(
+                heading: 'Éxito',
+                text: 'Usuario guardado correctamente.',
+                variant: 'success'
+            );
+        } catch (\Exception $e) {
+            Log::error("Error al guardar usuario: " . $e->getMessage(), ['exception' => $e]);
+            DB::rollBack();
+            Flux::toast(
+                heading: 'Error',
+                text: 'Ocurrió un error al guardar el usuario.',
+                variant: 'danger'
+            );
         }
-
-        if ($this->editingId) {
-            User::findOrFail($this->editingId)->update($data);
-        } else {
-            User::create($data);
-        }
-
-        $this->showEditor = false;
-        $this->resetEditor();
     }
 
     public function confirmDelete(int $userId): void

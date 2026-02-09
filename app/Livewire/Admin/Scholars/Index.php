@@ -121,18 +121,37 @@ class Index extends Component
         ]);
 
         try {
+            $photo = $validated['photo'] ?? null;
+            if ($photo === '') {
+                $photo = null;
+            }
+
+            $communityId = $validated['communityId'] ?? null;
+            $projectId = $validated['projectId'] ?? null;
+            $userId = $this->userId ?? null;
+
+            if ($communityId === '') {
+                $communityId = null;
+            }
+            if ($projectId === '') {
+                $projectId = null;
+            }
+            if ($userId === '') {
+                $userId = null;
+            }
+
             $data = [
                 'name' => $validated['name'],
-                'photo' => $validated['photo'] ?? $this->currentPhoto,
+                'photo' => $photo ?? $this->currentPhoto,
                 'institution' => $validated['institution'] ?? null,
                 'academic_level' => $validated['academicLevel'] ?? null,
                 'career' => $validated['career'] ?? null,
                 'study_level' => $validated['studyLevel'] ?? null,
-                'community_id' => $validated['communityId'] ?? null,
-                'project_id' => $validated['projectId'] ?? null,
+                'community_id' => $communityId,
+                'project_id' => $projectId,
                 'type' => $validated['type'] ?? null,
                 'phone' => $validated['phone'] ?? null,
-                'user_id' => $this->userId ?? null,
+                'user_id' => $userId,
             ];
 
             DB::beginTransaction();

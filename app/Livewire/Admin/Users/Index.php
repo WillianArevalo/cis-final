@@ -106,11 +106,13 @@ class Index extends Component
             }
 
             DB::beginTransaction();
+
             if ($this->editingId) {
                 User::findOrFail($this->editingId)->update($data);
             } else {
                 User::create($data);
             }
+
             DB::commit();
             $this->showEditor = false;
             $this->resetEditor();
@@ -140,19 +142,35 @@ class Index extends Component
 
     public function delete(): void
     {
-        if (!$this->deletingId) {
-            return;
+        try {
+            if (!$this->deletingId) {
+                return;
+            }
+
+            if (auth()->id() === $this->deletingId) {
+                $this->addError('delete', 'No puedes eliminar tu propio usuario.');
+                return;
+            }
+
+            DB::beginTransaction();
+            User::findOrFail($this->deletingId)->delete();
+            DB::commit();
+            $this->showDeleteConfirm = false;
+            $this->deletingId = null;
+            Flux::toast(
+                heading: 'Éxito',
+                text: 'Usuario eliminado correctamente.',
+                variant: 'success'
+            );
+        } catch (\Exception $e) {
+            Log::error("Error al eliminar usuario: " . $e->getMessage(), ['exception' => $e]);
+            DB::rollBack();
+            Flux::toast(
+                heading: 'Error',
+                text: 'Ocurrió un error al eliminar el usuario.',
+                variant: 'danger'
+            );
         }
-
-        if (auth()->id() === $this->deletingId) {
-            $this->addError('delete', 'No puedes eliminar tu propio usuario.');
-            return;
-        }
-
-        User::findOrFail($this->deletingId)->delete();
-
-        $this->showDeleteConfirm = false;
-        $this->deletingId = null;
     }
 
     private function resetEditor(): void

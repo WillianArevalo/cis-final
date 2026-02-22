@@ -3,6 +3,9 @@
 namespace App\Livewire\Admin\Communities;
 
 use App\Models\Community;
+use Flux\Flux;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -63,15 +66,25 @@ class Index extends Component
     public function save(): void
     {
         $validated = $this->validate();
-
-        if ($this->editingId) {
-            Community::findOrFail($this->editingId)->update($validated);
-        } else {
-            Community::create($validated);
+        try {
+            DB::beginTransaction();
+            if ($this->editingId) {
+                Community::findOrFail($this->editingId)->update($validated);
+            } else {
+                Community::create($validated);
+            }
+            DB::commit();
+            $this->showEditor = false;
+            $this->resetEditor();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error saving community', ['error' => $e->getMessage(), 'community_id' => $this->editingId]);
+            Flux::toast(
+                heading: 'Error al guardar',
+                text: 'Ocurrio un error al guardar la comunidad. Intenta de nuevo.',
+                variant: 'danger'
+            );
         }
-
-        $this->showEditor = false;
-        $this->resetEditor();
     }
 
     public function confirmDelete(int $communityId): void
@@ -83,14 +96,31 @@ class Index extends Component
 
     public function delete(): void
     {
-        if (!$this->deletingId) {
-            return;
+        try {
+            if (!$this->deletingId) {
+                return;
+            }
+
+            DB::beginTransaction();
+            Community::findOrFail($this->deletingId)->delete();
+            DB::commit();
+            $this->showDeleteConfirm = false;
+            $this->deletingId = null;
+
+            Flux::toast(
+                heading: 'Comunidad eliminada',
+                text: 'La comunidad ha sido eliminada exitosamente.',
+                variant: 'success'
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Flux::toast(
+                heading: 'Error al eliminar',
+                text: 'Ocurrio un error al eliminar la comunidad. Intenta de nuevo.',
+                variant: 'danger'
+            );
         }
-
-        Community::findOrFail($this->deletingId)->delete();
-
-        $this->showDeleteConfirm = false;
-        $this->deletingId = null;
     }
 
     private function resetEditor(): void

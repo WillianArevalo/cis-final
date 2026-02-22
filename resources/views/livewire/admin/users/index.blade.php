@@ -104,7 +104,7 @@
                     Deja la contrasena en blanco para mantener la actual.
                 </flux:text>
             @endif
-            <div class="ms:flex-row flex flex-col items-center justify-end gap-2">
+            <div class="flex flex-col items-center justify-end gap-2 sm:flex-row">
                 <flux:button variant="ghost" type="button" wire:click="$set('showEditor', false)"
                     class="w-full sm:w-auto">
                     Cancelar

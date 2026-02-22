@@ -76,6 +76,11 @@ class Index extends Component
             DB::commit();
             $this->showEditor = false;
             $this->resetEditor();
+            Flux::toast(
+                heading: 'Comunidad guardada',
+                text: 'La comunidad ha sido guardada exitosamente.',
+                variant: 'success'
+            );
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error saving community', ['error' => $e->getMessage(), 'community_id' => $this->editingId]);

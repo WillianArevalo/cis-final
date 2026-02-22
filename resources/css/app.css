@@ -114,7 +114,7 @@ h6 {
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-3 ring-offset-accent-foreground dark:ring-offset-slate-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-3 focus-visible:ring-offset-accent-foreground dark:focus-visible:ring-offset-slate-900;
+    @apply outline-hidden ring-2 ring-accent ring-offset-3 ring-offset-accent-foreground dark:ring-offset-slate-800 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-3 focus-visible:ring-offset-accent-foreground dark:focus-visible:ring-offset-slate-800;
 }
 
 \[:where(&)\]:size-4 {

@@ -16,14 +16,17 @@ use App\Livewire\Admin\Users\Index as UsersIndex;
 
 use App\Livewire\ForgotPassword;
 use App\Livewire\Login;
+use App\Livewire\Register;
 use App\Livewire\ResetPassword;
 use App\Livewire\UpdateLoginEmail;
+
 
 Route::get('/', Login::class)->name('home');
 Route::get('/login', Login::class)->name('login');
 Route::get('/login/actualizar-correo', UpdateLoginEmail::class)->name('login.update-email');
 Route::get('/contrasena/olvido', ForgotPassword::class)->name('password.request');
 Route::get('/contrasena/restablecer/{token}', ResetPassword::class)->name('password.reset');
+Route::get('/registro', Register::class)->name('register');
 
 Route::middleware(["auth", "role:admin"])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {

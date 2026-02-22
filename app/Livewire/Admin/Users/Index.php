@@ -97,7 +97,7 @@ class Index extends Component
 
             $data = [
                 'name' => $validated['name'],
-                'email' => $validated['email'],
+                'email' => $validated['email'] === '' ? null : $validated['email'],
                 'email_verified_at' => $this->emailVerified ? now() : null,
             ];
 

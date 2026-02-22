@@ -196,11 +196,6 @@ class Index extends Component
         try {
             DB::beginTransaction();
             $scholar = Scholarship::findOrFail($this->deletingId);
-
-            if ($scholar->user) {
-                $scholar->user->delete();
-            }
-
             $scholar->delete();
             $this->showDeleteConfirm = false;
             $this->deletingId = null;

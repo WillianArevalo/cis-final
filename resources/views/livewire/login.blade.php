@@ -7,8 +7,8 @@
         <h1 class="text-2xl font-bold uppercase">Iniciar sesión</h1>
     </div>
     <form method="POST" wire:submit="login" class="flex flex-col gap-4">
-        <flux:input wire:model="identifier" label="Usuario o correo" type="text" required autofocus autocomplete="username"
-            placeholder="usuario o email@example.com" clearable icon="at-symbol" />
+        <flux:input wire:model="identifier" label="Usuario o correo" type="text" required autofocus
+            autocomplete="username" placeholder="usuario o email@example.com" clearable icon="at-symbol" />
         <div class="relative">
             <flux:input wire:model="password" label="Contraseña" type="password" required icon="lock-closed"
                 autocomplete="current-password" placeholder="Contraseña" viewable />
@@ -23,4 +23,11 @@
             </flux:button>
         </div>
     </form>
+    <p class="text-center text-sm">
+        ¿No tienes una cuenta?
+        <flux:link href="{{ route('register') }}" wire:navigate
+            class="text-primary-600 hover:text-primary-500 font-medium">
+            Regístrate
+        </flux:link>
+    </p>
 </div>

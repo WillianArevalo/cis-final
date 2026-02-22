@@ -216,7 +216,8 @@
                 </x-slot>
                 <flux:select.option value="">Sin usuario asociado</flux:select.option>
                 @foreach ($users as $user)
-                    <flux:select.option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})
+                    <flux:select.option value="{{ $user->id }}">
+                        {{ $user->name }} ({{ $user->email }})
                     </flux:select.option>
                 @endforeach
             </flux:select>

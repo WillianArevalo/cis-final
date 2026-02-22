@@ -103,7 +103,7 @@ class ResetPassword extends Component
     {
         return match ($role) {
             'admin' => 'admin.dashboard',
-            'scholarship' => 'scholarship.dashboard',
+            'scholarship' => 'scholar.home',
             default => 'scholar.home',
         };
     }

@@ -196,6 +196,11 @@ class Index extends Component
         try {
             DB::beginTransaction();
             $scholar = Scholarship::findOrFail($this->deletingId);
+
+            if ($scholar->user) {
+                $scholar->user->delete();
+            }
+
             $scholar->delete();
             $this->showDeleteConfirm = false;
             $this->deletingId = null;
@@ -206,6 +211,7 @@ class Index extends Component
                 variant: 'success'
             );
         } catch (\Exception $e) {
+            Log::error("Error al eliminar becario: " . $e->getMessage(), ['exception' => $e]);
             DB::rollBack();
             Flux::toast(
                 heading: 'Error',

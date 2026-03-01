@@ -35,6 +35,13 @@
                 <flux:text class="text-sm text-zinc-600 dark:text-zinc-300">
                     {{ $project->general_objective ?: 'No se ha registrado el objetivo general.' }}
                 </flux:text>
+
+                <div
+                    class="mt-3 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                    {!! \Mews\Purifier\Facades\Purifier::clean($project->general_objective) ??
+                        'No se ha registrado el objetivo general' !!}
+                </div>
+
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div
                         class="rounded-xl border border-zinc-200 bg-white/80 p-4 dark:border-zinc-700 dark:bg-zinc-900/60">
@@ -94,15 +101,26 @@
                 <div class="mt-4 space-y-4 text-sm text-zinc-600 dark:text-zinc-300">
                     <div>
                         <flux:text class="text-xs uppercase text-zinc-400">Justificacion</flux:text>
-                        <p class="mt-2">{{ $project->justification ?: 'No registrada.' }}</p>
+                        <div
+                            class="mt-3 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                            {!! \Mews\Purifier\Facades\Purifier::clean($project->justification) ?? 'No se ha registrado la justificación' !!}
+                        </div>
                     </div>
                     <div>
                         <flux:text class="text-xs uppercase text-zinc-400">Contextualizacion</flux:text>
-                        <p class="mt-2">{{ $project->contextualization ?: 'No registrada.' }}</p>
+                        <div
+                            class="mt-3 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                            {!! \Mews\Purifier\Facades\Purifier::clean($project->contextualization) ??
+                                'No se ha registrado la contextualización' !!}
+                        </div>
                     </div>
                     <div>
                         <flux:text class="text-xs uppercase text-zinc-400">Descripcion de actividades</flux:text>
-                        <p class="mt-2">{{ $project->description_activities ?: 'No registrada.' }}</p>
+                        <div
+                            class="mt-3 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                            {!! \Mews\Purifier\Facades\Purifier::clean($project->description_activities) ??
+                                'No se ha registrado la descripción de actividades' !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,11 +130,17 @@
                 <div class="mt-4 space-y-4 text-sm text-zinc-600 dark:text-zinc-300">
                     <div>
                         <flux:text class="text-xs uppercase text-zinc-400">Proyecciones</flux:text>
-                        <p class="mt-2">{{ $project->projections ?: 'No registradas.' }}</p>
+                        <div
+                            class="mt-2 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                            {!! \Mews\Purifier\Facades\Purifier::clean($project->projections) ?? 'No se han registrado las proyecciones' !!}
+                        </div>
                     </div>
                     <div>
                         <flux:text class="text-xs uppercase text-zinc-400">Retos</flux:text>
-                        <p class="mt-2">{{ $project->challenges ?: 'No registrados.' }}</p>
+                        <div
+                            class="mt-2 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
+                            {!! \Mews\Purifier\Facades\Purifier::clean($project->challenges) ?? 'No se han registrados los retos' !!}
+                        </div>
                     </div>
                 </div>
             </div>

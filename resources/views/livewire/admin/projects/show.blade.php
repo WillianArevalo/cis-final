@@ -32,16 +32,11 @@
         <div class="grid gap-6 lg:grid-cols-3">
             <div class="space-y-4 lg:col-span-2">
                 <flux:heading size="lg">Resumen general</flux:heading>
-                <flux:text class="text-sm text-zinc-600 dark:text-zinc-300">
-                    {{ $project->general_objective ?: 'No se ha registrado el objetivo general.' }}
-                </flux:text>
-
                 <div
                     class="mt-3 space-y-3 text-sm text-zinc-600 dark:text-zinc-300 [&_a]:text-emerald-600 [&_a]:underline [&_blockquote]:border-s-2 [&_blockquote]:border-zinc-200 [&_blockquote]:ps-4 [&_blockquote]:text-zinc-500 [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:ps-5">
                     {!! \Mews\Purifier\Facades\Purifier::clean($project->general_objective) ??
                         'No se ha registrado el objetivo general' !!}
                 </div>
-
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div
                         class="rounded-xl border border-zinc-200 bg-white/80 p-4 dark:border-zinc-700 dark:bg-zinc-900/60">

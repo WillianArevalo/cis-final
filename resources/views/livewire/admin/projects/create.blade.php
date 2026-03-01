@@ -53,17 +53,17 @@
             <flux:switch wire:model.defer="accept" label="Proyecto aprobado" />
         </div>
 
-        <flux:textarea wire:model.defer="generalObjective" label="Objetivo general" rows="4"
+        <flux:editor wire:model.defer="generalObjective" label="Objetivo general" rows="4"
             placeholder="Describe el objetivo general del proyecto" />
-        <flux:textarea wire:model.defer="justification" label="Justificacion" rows="4"
+        <flux:editor wire:model.defer="justification" label="Justificacion" rows="4"
             placeholder="Motiva el por que del proyecto" />
-        <flux:textarea wire:model.defer="contextualization" label="Contextualizacion" rows="4"
+        <flux:editor wire:model.defer="contextualization" label="Contextualizacion" rows="4"
             placeholder="Contexto de la comunidad y necesidades" />
-        <flux:textarea wire:model.defer="descriptionActivities" label="Descripcion de actividades" rows="4"
+        <flux:editor wire:model.defer="descriptionActivities" label="Descripcion de actividades" rows="4"
             placeholder="Describe las actividades principales" />
-        <flux:textarea wire:model.defer="projections" label="Proyecciones" rows="4"
+        <flux:editor wire:model.defer="projections" label="Proyecciones" rows="4"
             placeholder="Resultados esperados del proyecto" />
-        <flux:textarea wire:model.defer="challenges" label="Retos" rows="4"
+        <flux:editor wire:model.defer="challenges" label="Retos" rows="4"
             placeholder="Riesgos o retos previstos" />
 
         <div class="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900">

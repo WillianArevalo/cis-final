@@ -19,10 +19,12 @@ use App\Livewire\Login;
 use App\Livewire\Register;
 use App\Livewire\ResetPassword;
 use App\Livewire\UpdateLoginEmail;
+use App\Http\Controllers\LoginFallbackController;
 
 
 Route::get('/', Login::class)->name('home');
 Route::get('/login', Login::class)->name('login');
+Route::post('/login', [LoginFallbackController::class, 'store'])->name('login.store');
 Route::get('/login/actualizar-correo', UpdateLoginEmail::class)->name('login.update-email');
 Route::get('/contrasena/olvido', ForgotPassword::class)->name('password.request');
 Route::get('/contrasena/restablecer/{token}', ResetPassword::class)->name('password.reset');

@@ -6,7 +6,8 @@
         </div>
         <h1 class="text-2xl font-bold uppercase">Iniciar sesión</h1>
     </div>
-    <form method="POST" wire:submit="login" class="flex flex-col gap-4">
+    <form method="POST" action="{{ route('login.store') }}" wire:submit.prevent="login" class="flex flex-col gap-4">
+        @csrf
         <flux:input wire:model="identifier" label="Usuario o correo" type="text" required autofocus
             autocomplete="username" placeholder="usuario o email@example.com" clearable icon="at-symbol" />
         <div class="relative">

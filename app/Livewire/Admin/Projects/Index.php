@@ -16,6 +16,24 @@ class Index extends Component
 {
     use WithPagination;
 
+    private const REQUIRED_PROJECT_FIELDS = [
+        'name' => 'Nombre del proyecto social',
+        'slug' => 'Identificador del proyecto',
+        'community_id' => 'Comunidad',
+        'document' => 'Documento del proyecto',
+        'sent_by' => 'Usuario que registró el proyecto',
+        'benefited_population' => 'Población beneficiada',
+        'general_objective' => 'Objetivo general',
+        'justification' => 'Justificación',
+        'location' => 'Ubicación',
+        'map' => 'Enlace del mapa',
+        'contextualization' => 'Contextualización',
+        'description_activities' => 'Descripción de actividades',
+        'projections' => 'Proyecciones',
+        'challenges' => 'Desafíos',
+        'schedule' => 'Cronograma',
+    ];
+
     public string $search = '';
     public int $perPage = 10;
     public string $communityFilter = '';
@@ -131,6 +149,68 @@ class Index extends Component
         }
     }
 
+    public function acceptProject($projectId)
+    {
+        try {
+            $project = Project::findOrFail($projectId);
+            $missingFields = $this->getMissingProjectFields($project);
+
+            if (count($missingFields) > 0) {
+                Flux::toast(
+                    heading: 'Información faltante',
+                    text: 'No se puede aceptar el proyecto porque aún tiene campos incompletos.',
+                    variant: 'warning',
+                );
+
+                return;
+            }
+
+            if ($project->accept) {
+                Flux::toast(
+                    heading: 'Proyecto ya aceptado',
+                    text: 'Este proyecto social ya se encuentra aceptado.',
+                    variant: 'info',
+                );
+
+                return;
+            }
+
+            $project->update(['accept' => true]);
+
+            Flux::toast(
+                heading: 'Proyecto aceptado',
+                text: 'El proyecto social se marcó como aceptado exitosamente.',
+                variant: 'success',
+            );
+        } catch (\Exception $e) {
+            Log::error('Error al aceptar el proyecto social', [
+                'project_id' => $projectId,
+                'error_message' => $e->getMessage(),
+            ]);
+
+            Flux::toast(
+                heading: 'Error al aceptar proyecto',
+                text: 'Ocurrió un error al aceptar el proyecto social. Por favor, intenta nuevamente.',
+                variant: 'danger',
+            );
+        }
+    }
+
+    private function getMissingProjectFields(Project $project): array
+    {
+        $missingFields = [];
+
+        foreach (self::REQUIRED_PROJECT_FIELDS as $field => $label) {
+            $value = $project->{$field};
+
+            if (is_null($value) || (is_string($value) && trim($value) === '')) {
+                $missingFields[] = $label;
+            }
+        }
+
+        return $missingFields;
+    }
+
     #[Layout('components.layouts.app')]
     public function render()
     {
@@ -147,6 +227,14 @@ class Index extends Component
                 $query->where('community_id', $this->communityFilter);
             })
             ->paginate($this->perPage);
+
+        $projects->getCollection()->transform(function (Project $project) {
+            $missingFields = $this->getMissingProjectFields($project);
+            $project->setAttribute('missing_fields', $missingFields);
+            $project->setAttribute('is_complete', count($missingFields) === 0);
+
+            return $project;
+        });
 
         return view('livewire.admin.projects.index', [
             'projects' => $projects,

@@ -47,6 +47,9 @@
             @forelse ($projects as $project)
                 @php
                     $reportOfTheMonth = $project->reports()->where('month', $month)->first();
+                    $missingFields = $project->missing_fields ?? [];
+                    $isComplete = (bool) ($project->is_complete ?? false);
+                    $missingFieldsText = implode(', ', $missingFields);
                     $class = $reportOfTheMonth
                         ? 'bg-green-50 text-green-800 dark:bg-green-900/10 dark:text-green-300'
                         : 'bg-red-50 text-red-800 dark:bg-red-900/10 dark:text-red-300';
@@ -58,15 +61,29 @@
                     </flux:table.cell>
                     <flux:table.cell>{{ $project->community ? $project->community->name : 'N/A' }}</flux:table.cell>
                     <flux:table.cell>
-                        @if ($project->accept)
-                            <flux:badge color="green" icon="check-circle" size="sm">
-                                Aceptado
-                            </flux:badge>
-                        @else
-                            <flux:badge color="amber" icon="clock" size="sm">
-                                Pendiente
-                            </flux:badge>
-                        @endif
+                        <div class="flex flex-col gap-2">
+                            @if ($project->accept)
+                                <flux:badge color="green" icon="check-circle" size="sm">
+                                    Aceptado
+                                </flux:badge>
+                            @else
+                                <flux:badge color="amber" icon="clock" size="sm">
+                                    Pendiente
+                                </flux:badge>
+                            @endif
+
+                            @if ($isComplete)
+                                <flux:badge color="sky" icon="sparkles" size="sm">
+                                    Disponible para aceptar
+                                </flux:badge>
+                            @else
+                                <flux:tooltip content="Faltan: {{ $missingFieldsText }}">
+                                    <flux:badge color="red" icon="exclamation-circle" size="sm">
+                                        Información faltante
+                                    </flux:badge>
+                                </flux:tooltip>
+                            @endif
+                        </div>
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($reportOfTheMonth)
@@ -126,6 +143,11 @@
                                     wire:navigate>
                                     Detalles
                                 </flux:menu.item>
+                                @if (! $project->accept)
+                                    <flux:menu.item icon="check-circle" wire:click="acceptProject({{ $project->id }})">
+                                        Aceptar
+                                    </flux:menu.item>
+                                @endif
                                 <flux:menu.item icon="user-plus" wire:click="assignScholars({{ $project->id }})">
                                     Asignar becados
                                 </flux:menu.item>

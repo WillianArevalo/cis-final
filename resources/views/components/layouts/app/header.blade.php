@@ -67,7 +67,7 @@
             </flux:sidebar.nav>
             <flux:sidebar.spacer />
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="information-circle" href="#">
+                <flux:sidebar.item icon="information-circle" href="https://wa.me/50375456642" target="_blank">
                     Ayuda
                 </flux:sidebar.item>
             </flux:sidebar.nav>

@@ -73,7 +73,7 @@
                             @endif
 
                             @if ($isComplete)
-                                <flux:badge color="sky" icon="sparkles" size="sm" class="w-max"|>
+                                <flux:badge color="sky" icon="sparkles" size="sm" class="w-max">
                                     Disponible para aceptar
                                 </flux:badge>
                             @else

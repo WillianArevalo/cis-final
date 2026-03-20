@@ -17,6 +17,24 @@ class ScholarProject extends Component
 {
     use WithFileUploads;
 
+    private const REQUIRED_PROJECT_FIELDS = [
+        'name' => 'Nombre del proyecto social',
+        'slug' => 'Identificador del proyecto',
+        'community_id' => 'Comunidad',
+        'document' => 'Documento del proyecto',
+        'sent_by' => 'Usuario que registró el proyecto',
+        'benefited_population' => 'Población beneficiada',
+        'general_objective' => 'Objetivo general',
+        'justification' => 'Justificación',
+        'location' => 'Enlace de ubicación',
+        'map' => 'Imagen del mapa',
+        'contextualization' => 'Contextualización',
+        'description_activities' => 'Descripción de actividades',
+        'projections' => 'Proyecciones',
+        'challenges' => 'Desafíos',
+        'schedule' => 'Cronograma',
+    ];
+
     public ?int $projectId = null;
     public $project = null;
     public string $name = '';
@@ -39,6 +57,7 @@ class ScholarProject extends Component
     public string $challenges = '';
     public array $specificObjectives = [];
     public array $scholarshipsIds = [];
+    public array $missingProjectFields = [];
 
     public $communities = [];
     public $scholars = [];
@@ -75,6 +94,10 @@ class ScholarProject extends Component
 
         if (count($this->specificObjectives) === 0) {
             $this->specificObjectives = [''];
+        }
+
+        if ($this->project) {
+            $this->missingProjectFields = $this->getMissingProjectFields($this->project);
         }
 
         $this->communities = Community::all();
@@ -263,6 +286,38 @@ class ScholarProject extends Component
         if (count($this->specificObjectives) === 0) {
             $this->specificObjectives = [''];
         }
+    }
+
+    private function getMissingProjectFields(Project $project): array
+    {
+        $missingFields = [];
+        $fileFields = ['document', 'schedule', 'map'];
+
+        foreach (self::REQUIRED_PROJECT_FIELDS as $field => $label) {
+            $value = $project->{$field};
+
+            if (in_array($field, $fileFields, true)) {
+                if (is_null($value) || trim((string) $value) === '' || ! Storage::disk('public')->exists($value)) {
+                    $missingFields[] = $label;
+                }
+
+                continue;
+            }
+
+            if ($field === 'location') {
+                if (is_null($value) || trim((string) $value) === '' || ! filter_var($value, FILTER_VALIDATE_URL)) {
+                    $missingFields[] = $label;
+                }
+
+                continue;
+            }
+
+            if (is_null($value) || (is_string($value) && trim($value) === '')) {
+                $missingFields[] = $label;
+            }
+        }
+
+        return $missingFields;
     }
 
     #[Layout('components.layouts.scholar')]

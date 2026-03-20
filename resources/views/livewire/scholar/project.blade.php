@@ -34,6 +34,16 @@
                     Tu proyecto social ha sido creado pero aún no ha sido aceptado por el comité. El comité revisará la
                     información proporcionada y decidirá si acepta o rechaza el proyecto.
                 </flux:callout.text>
+                @if (count($missingProjectFields) > 0)
+                    <div class="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-900/20">
+                        <p class="text-sm font-medium text-amber-800 dark:text-amber-200">Campos pendientes por completar:</p>
+                        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-amber-800 dark:text-amber-200">
+                            @foreach ($missingProjectFields as $field)
+                                <li>{{ $field }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </flux:callout>
         @endif
 

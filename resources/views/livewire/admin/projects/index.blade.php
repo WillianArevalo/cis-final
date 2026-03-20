@@ -77,11 +77,11 @@
                                     Disponible para aceptar
                                 </flux:badge>
                             @else
-                                <flux:tooltip content="Faltan: {{ $missingFieldsText }}" class="w-max">
-                                    <flux:badge color="red" icon="exclamation-circle" size="sm">
+                                <flux:badge as="button" type="button" color="red" icon="exclamation-circle"
+                                    size="sm" wire:click="showMissingProjectInfo({{ $project->id }})"
+                                    class="w-max cursor-pointer">
                                         Información faltante
-                                    </flux:badge>
-                                </flux:tooltip>
+                                </flux:badge>
                             @endif
                         </div>
                     </flux:table.cell>
@@ -213,6 +213,31 @@
                 </flux:button>
                 <flux:button variant="danger" type="button" wire:click="deleteProject">
                     Eliminar
+                </flux:button>
+            </div>
+        </div>
+    </flux:modal>
+
+    <flux:modal wire:model="showMissingInfo" class="w-full max-w-sm">
+        <div class="flex flex-col gap-4">
+            <div class="space-y-1">
+                <flux:heading size="lg">Información faltante</flux:heading>
+                <flux:text class="text-sm">Proyecto: {{ $missingInfoProjectName }}</flux:text>
+            </div>
+
+            @if (count($missingInfoFields) > 0)
+                <ul class="list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+                    @foreach ($missingInfoFields as $field)
+                        <li>{{ $field }}</li>
+                    @endforeach
+                </ul>
+            @else
+                <flux:text class="text-sm">No hay campos faltantes.</flux:text>
+            @endif
+
+            <div class="flex items-center justify-end">
+                <flux:button variant="primary" type="button" wire:click="$set('showMissingInfo', false)">
+                    Entendido
                 </flux:button>
             </div>
         </div>

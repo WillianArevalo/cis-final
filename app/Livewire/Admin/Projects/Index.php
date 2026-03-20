@@ -50,6 +50,10 @@ class Index extends Component
     public $showDelete = false;
     public $deleteProjectId = null;
 
+    public bool $showMissingInfo = false;
+    public string $missingInfoProjectName = '';
+    public array $missingInfoFields = [];
+
     public function mount()
     {
         $this->communities = Community::all();
@@ -119,6 +123,15 @@ class Index extends Component
     {
         $this->deleteProjectId = $projectId;
         $this->showDelete = true;
+    }
+
+    public function showMissingProjectInfo(int $projectId): void
+    {
+        $project = Project::findOrFail($projectId);
+
+        $this->missingInfoProjectName = $project->name;
+        $this->missingInfoFields = $this->getMissingProjectFields($project);
+        $this->showMissingInfo = true;
     }
 
     public function deleteProject()

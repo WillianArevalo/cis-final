@@ -52,7 +52,7 @@ class Create extends Component
             'benefitedPopulation' => 'nullable|string',
             'generalObjective' => 'nullable|string',
             'justification' => 'nullable|string',
-            'location' => 'nullable|string|max:255',
+            'location' => 'nullable|url|max:255',
             'contextualization' => 'nullable|string',
             'descriptionActivities' => 'nullable|string',
             'projections' => 'nullable|string',
@@ -69,6 +69,7 @@ class Create extends Component
             'map.image' => 'El mapa debe ser una imagen valida.',
             'map.max' => 'El mapa no puede exceder los 5MB.',
             'location.max' => 'La ubicacion no puede exceder los 255 caracteres.',
+            'location.url' => 'La ubicacion debe ser un enlace valido.',
         ]);
 
         try {

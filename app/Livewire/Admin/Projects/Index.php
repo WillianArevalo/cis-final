@@ -8,6 +8,7 @@ use App\Models\Scholarship;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -25,8 +26,8 @@ class Index extends Component
         'benefited_population' => 'Población beneficiada',
         'general_objective' => 'Objetivo general',
         'justification' => 'Justificación',
-        'location' => 'Ubicación',
-        'map' => 'Enlace del mapa',
+        'location' => 'Enlace de ubicación',
+        'map' => 'Imagen del mapa',
         'contextualization' => 'Contextualización',
         'description_activities' => 'Descripción de actividades',
         'projections' => 'Proyecciones',
@@ -199,9 +200,26 @@ class Index extends Component
     private function getMissingProjectFields(Project $project): array
     {
         $missingFields = [];
+        $fileFields = ['document', 'schedule', 'map'];
 
         foreach (self::REQUIRED_PROJECT_FIELDS as $field => $label) {
             $value = $project->{$field};
+
+            if (in_array($field, $fileFields, true)) {
+                if (is_null($value) || trim((string) $value) === '' || ! Storage::disk('public')->exists($value)) {
+                    $missingFields[] = $label;
+                }
+
+                continue;
+            }
+
+            if ($field === 'location') {
+                if (is_null($value) || trim((string) $value) === '' || ! filter_var($value, FILTER_VALIDATE_URL)) {
+                    $missingFields[] = $label;
+                }
+
+                continue;
+            }
 
             if (is_null($value) || (is_string($value) && trim($value) === '')) {
                 $missingFields[] = $label;

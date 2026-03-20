@@ -83,7 +83,7 @@
             @endif
 
             <div class="grid gap-4 md:grid-cols-2">
-                <flux:input wire:model.defer="location" label="Ubicacion" placeholder="Municipio, canton o caserio"
+                <flux:input wire:model.defer="location" label="Enlace de ubicacion" placeholder="https://maps.google.com/..."
                     icon="map-pin" />
                 <flux:input wire:model.defer="benefitedPopulation" label="Poblacion beneficiada"
                     placeholder="Ej. 120 familias, 10 niños de la comunidad..." icon="users" />

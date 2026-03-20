@@ -63,21 +63,21 @@
                     <flux:table.cell>
                         <div class="flex flex-col gap-2">
                             @if ($project->accept)
-                                <flux:badge color="green" icon="check-circle" size="sm">
+                                <flux:badge color="green" icon="check-circle" size="sm" class="w-max">
                                     Aceptado
                                 </flux:badge>
                             @else
-                                <flux:badge color="amber" icon="clock" size="sm">
+                                <flux:badge color="amber" icon="clock" size="sm" class="w-max">
                                     Pendiente
                                 </flux:badge>
                             @endif
 
                             @if ($isComplete)
-                                <flux:badge color="sky" icon="sparkles" size="sm">
+                                <flux:badge color="sky" icon="sparkles" size="sm" class="w-max"|>
                                     Disponible para aceptar
                                 </flux:badge>
                             @else
-                                <flux:tooltip content="Faltan: {{ $missingFieldsText }}">
+                                <flux:tooltip content="Faltan: {{ $missingFieldsText }}" class="w-max">
                                     <flux:badge color="red" icon="exclamation-circle" size="sm">
                                         Información faltante
                                     </flux:badge>

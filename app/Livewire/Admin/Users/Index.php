@@ -7,6 +7,7 @@ use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -133,6 +134,48 @@ class Index extends Component
         }
     }
 
+    public function impersonate(int $userId): void
+    {
+        try {
+            $currentUserId = auth()->id();
+
+            if (!$currentUserId) {
+                Flux::toast(
+                    heading: 'Error',
+                    text: 'No hay una sesión activa para personificar.',
+                    variant: 'danger'
+                );
+
+                return;
+            }
+
+            if ($currentUserId === $userId) {
+                Flux::toast(
+                    heading: 'Acción no válida',
+                    text: 'No puedes personificar tu propio usuario.',
+                    variant: 'warning'
+                );
+
+                return;
+            }
+
+            $user = User::findOrFail($userId);
+
+            session(['impersonator_id' => $currentUserId]);
+            Auth::login($user);
+            request()->session()->regenerate();
+
+            $this->redirect(route($this->redirectRouteFor($user->role)), navigate: true);
+        } catch (\Exception $e) {
+            Log::error("Error al personificar usuario: " . $e->getMessage(), ['exception' => $e]);
+            Flux::toast(
+                heading: 'Error',
+                text: 'Ocurrió un error al personificar el usuario.',
+                variant: 'danger'
+            );
+        }
+    }
+
     public function confirmDelete(int $userId): void
     {
         $this->resetValidation();
@@ -185,6 +228,15 @@ class Index extends Component
         ]);
 
         $this->resetValidation();
+    }
+
+    private function redirectRouteFor(?string $role): string
+    {
+        return match ($role) {
+            'admin' => 'admin.dashboard',
+            'scholar' => 'scholar.home',
+            default => 'home',
+        };
     }
 
     #[Layout('components.layouts.app')]

@@ -57,6 +57,9 @@
                                 Acciones
                             </flux:button>
                             <flux:menu>
+                                <flux:menu.item size="sm" icon="user" wire:click="impersonate({{ $user->id }})">
+                                    Personificar
+                                </flux:menu.item>
                                 <flux:menu.item size="sm" icon="edit" wire:click="edit({{ $user->id }})">
                                     Editar
                                 </flux:menu.item>

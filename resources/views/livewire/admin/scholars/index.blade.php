@@ -175,6 +175,7 @@
                     <flux:select label="Nivel educativo" wire:model.defer="studyLevel" variant="listbox"
                         placeholder="Seleccionar nivel educativo">
                         <flux:select.option value="" disabled>Seleccionar nivel educativo</flux:select.option>
+                        <flux:select.option value="Educación básica">Educación básica</flux:select.option>
                         <flux:select.option value="Bachillerato General">Bachillerato General</flux:select.option>
                         <flux:select.option value="Bachillerato Vocacional">Bachillerato Vocacional</flux:select.option>
                         <flux:select.option value="Técnico Universitario u otro">Técnico universitario u otro

@@ -80,17 +80,28 @@ class Edit extends Component
 
     public function save(): void
     {
-        $this->validate([
-            'date' => 'required|date',
-            'theme' => 'required|string|max:255',
-            'numberParticipants' => 'required|integer|min:0',
-            'description' => 'required|string',
-            'obstacles' => 'required|string',
-            'assists' => 'array',
-            'newImages' => 'array',
-            'newImages.*' => 'image|max:5120',
-            'removedImageIds' => 'array',
-        ]);
+        $this->validate(
+            [
+                'date' => 'required|date',
+                'theme' => 'required|string|max:255',
+                'numberParticipants' => 'required|integer|min:0',
+                'description' => 'required|string',
+                'obstacles' => 'required|string',
+                'assists' => 'array',
+                'newImages' => 'array',
+                'newImages.*' => 'image',
+                'removedImageIds' => 'array',
+            ],
+            [
+                "date.required" => "La fecha del reporte es obligatoria",
+                "theme.required" => "El tema del reporte es obligatorio",
+                "numberParticipants.required" => "El número de participantes es obligatorio",
+                "description.required" => "La descripción del reporte es obligatoria",
+                "obstacles.required" => "Los obstaculos son requeridos (agrega al menos uno)",
+                "newImages.*.max" => "Una imagen agregada es mayor a 30 MB, eliminela o cambiela",
+                "newImages.*.image" => "Solo se permiten imágenes (JPG, PNG, GIF)"
+            ]
+        );
 
         try {
             DB::beginTransaction();

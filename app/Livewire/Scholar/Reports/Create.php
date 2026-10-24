@@ -72,7 +72,14 @@ class Create extends Component
             'numberParticipants' => 'required|integer|min:0',
             'description' => 'required|string',
             'obstacles' => 'required|string',
-            'images.*' => 'required|image|max:5120', // 5MB max per image
+            'images.*' => 'required|image|max:12288', // 12MB max per image
+        ], [
+            "date.required" => "La fecha del reporte es obligatoria",
+            "theme.required" => "El tema del reporte es obligatorio",
+            "numberParticipants.required" => "El número de participantes es obligatorio",
+            "description.required" => "La descripción del reporte es obligatoria",
+            "obstacles.required" => "Los obstaculos son requeridos (agrega al menos uno)",
+            "images.max" => "Una imagen agregada es mayor a 2 MB, eliminela o cambiela"
         ]);
 
         try {

@@ -79,7 +79,7 @@ class Create extends Component
             "numberParticipants.required" => "El número de participantes es obligatorio",
             "description.required" => "La descripción del reporte es obligatoria",
             "obstacles.required" => "Los obstaculos son requeridos (agrega al menos uno)",
-            "images.max" => "Una imagen agregada es mayor a 2 MB, eliminela o cambiela"
+            "images.*.max" => "Una imagen agregada es mayor a 2 MB, eliminela o cambiela"
         ]);
 
         try {

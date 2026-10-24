@@ -72,7 +72,7 @@ class Create extends Component
             'numberParticipants' => 'required|integer|min:0',
             'description' => 'required|string',
             'obstacles' => 'required|string',
-            'images.*' => 'required|image|max:12288', // 12MB max per image
+            'images.*' => 'required|image', // 12MB max per image
         ], [
             "date.required" => "La fecha del reporte es obligatoria",
             "theme.required" => "El tema del reporte es obligatorio",

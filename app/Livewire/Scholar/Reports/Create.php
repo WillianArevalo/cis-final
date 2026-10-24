@@ -80,7 +80,7 @@ class Create extends Component
             "description.required" => "La descripción del reporte es obligatoria",
             "obstacles.required" => "Los obstaculos son requeridos (agrega al menos uno)",
             "images.*.max" => "Una imagen agregada es mayor a 2 MB, eliminela o cambiela",
-            "images.image" => "Solo se permiten imágenes (JPG, PNG, GIF)"
+            "images.*.image" => "Solo se permiten imágenes (JPG, PNG, GIF)"
         ]);
 
         try {

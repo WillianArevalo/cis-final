@@ -54,7 +54,7 @@
         <flux:file-upload wire:model="images" multiple label="Fotografías de la actividad" accept="image/*"
             max-size="10240">
             <flux:file-upload.dropzone heading="Arrastra los archivos aquí o haz clic para buscar"
-                text="JPG, PNG, GIF hasta 10MB" with-progress />
+                text="JPG, PNG, GIF hasta 12MB" with-progress />
         </flux:file-upload>
 
         @if (count($images) > 0)
